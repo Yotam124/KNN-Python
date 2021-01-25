@@ -1,5 +1,11 @@
 import numpy as np
+import pandas as pd
 from collections import Counter
+
+
+def calc_err(y_true, y_pred):
+    accuracy = np.sum(y_true != y_pred) / len(y_true)
+    return accuracy
 
 
 def distance(p1, p2):
@@ -20,12 +26,19 @@ class KNN:
         self.X_train = X
         self.y_train = y
 
-    def predict(self, X):
-        predictions = []
+    def predict(self, X, y):
+        data = []
         for k in self.k:
-            y_pred = [self._predict(x, k) for x in X]
+            y_pred = np.array([self._predict(x, k) for x in X])
 
-            predictions
+            l_1_err = calc_err(y, y_pred[:, 0])
+            l_2_err = calc_err(y, y_pred[:, 1])
+            l_inf_err = calc_err(y, y_pred[:, 2])
+
+            data.append([k, l_1_err, l_2_err, l_inf_err])
+
+        predictions = pd.DataFrame(data, columns=['K_value', 'l_1', 'l_2', 'l_inf'])
+
         return np.array(y_pred)
 
     #       l1
