@@ -39,7 +39,7 @@ class KNN:
 
         predictions = pd.DataFrame(data, columns=['K_value', 'l_1', 'l_2', 'l_inf'])
 
-        return np.array(y_pred)
+        return predictions
 
     #       l1
     # k=1   ..
